@@ -37,3 +37,5 @@ def sort_list(array):
 result_no_ordered, list_length = list_no_duplicates(two_dimensional)
 print("List length: {} \nList: {}\nNo duplicates: {} \nLength after: {}"
       .format(list_length, two_dimensional, result_no_ordered, len(result_no_ordered)))
+
+print("hello")
