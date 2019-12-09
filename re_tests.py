@@ -3,11 +3,14 @@ import os
 import json
 
 FILE_NAME = r"resources\temp"
-FILE_LOG = "api.parkingwatcher.com.access.log"
+FILE_LOG = "api.parkingwatcher.com.access_1.log"
 SEARCH_PATTERN = r'\b[a-z]\b'
 
 
 def get_path(file_name):
+    """
+    :param file_name: name of file with type
+    """
     return os.getcwd() + os.sep + 'resources' + os.sep + file_name
 
 
@@ -41,9 +44,9 @@ def dict_check(match_obj, dict_obj):
 
 
 def log_statistics(file_path):
-    # search_pattern = r'\b(200|301)\b'
-    search_code_response = r'\b[2-4][0-5][0-9]\b'
-    search_agent = r'(?<=\().*(?=\))'
+    # search_code_response = r'\b(200|301)'
+    search_code_response = r'(?<=\s)[2-4][0-5][0-9](?=\s)'
+    search_agent = r'(?<=\()((.*\d)|(.*))(?=\))'
     result_code = dict()
     result_agent = dict()
     with open(file_path, 'r') as file:
