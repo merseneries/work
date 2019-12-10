@@ -1,17 +1,28 @@
 import csv
-import os
+
 import requests
 
-
-def get_path(file_name):
-    """
-    :param file_name: name of file with type
-    """
-    return os.getcwd() + os.sep + 'resources' + os.sep + file_name
-
+from my_funcs import get_path
 
 FILE_NAME = "book.csv"
-FILE_NAME_2 = "book.csv_2"
+
+
+def func_decorator(func):
+    import time
+
+    def wrapped(*args):
+        start = time.time()
+        return_value = func(*args)
+        end = time.time()
+        time_response = return_value.elapsed.total_seconds() if return_value.status_code == 200 else "Null"
+        return time_response, end - start
+
+    return wrapped
+
+
+@func_decorator
+def get_response(url):
+    return requests.get(url)
 
 
 def file_read(name_file):
@@ -21,17 +32,16 @@ def file_read(name_file):
         read_csv = csv.DictReader(file, delimiter=";")
         result = []
         for row in read_csv:
-            response = requests.get(row.get("URL"))
-            time_response = response.elapsed.total_seconds() if response.status_code == 200 else "Null"
-            # time_response = response.elapsed.total_seconds()
-            result.append({"URL": row.get("URL"), "Time": time_response})
+            time_response, time_sys = get_response(row.get("URL"))
+            # time_response = response.elapsed.total_seconds() if response.status_code == 200 else "Null"
+            result.append({"URL": row.get("URL"), "Time": time_response, "Time_sys": round(time_sys, 6)})
     return result
 
 
 def file_write(name_file, data):
     full_path = get_path(name_file)
     with open(full_path, "w", newline='\n') as file:
-        write_csv = csv.DictWriter(file, fieldnames=["URL", "Time"], delimiter=";")
+        write_csv = csv.DictWriter(file, fieldnames=["URL", "Time", "Time_sys"], delimiter=";")
         write_csv.writeheader()
         write_csv.writerows(data)
 
