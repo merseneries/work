@@ -14,21 +14,22 @@ def go_to(text):
     time_go = 2
 
     driver = webdriver.Chrome("resources/chromedriver.exe")
-    monitor.csv_write(monitor.get_process_stat())
     driver.get(GOOGLE_URL)
-    monitor.csv_write(monitor.get_process_stat())
+    monitor.get_now()
     element = driver.find_element_by_name("q")
-    monitor.csv_write(monitor.get_process_stat())
     element.send_keys(text)
-    monitor.csv_write(monitor.get_process_stat())
     element.submit()
+    monitor.get_now()
 
     for num in range(time_go):
+        time.sleep(1)
         list_elements = driver.find_elements_by_css_selector("div.r > a:first-child")
         list_elements[num].click()
         driver.execute_script("window.history.go(-1)")
-        time.sleep(1)
-    # search_box_element = driver.find_element_by_css_selector(SEARCH_BOX_LOCATOR)
+        monitor.get_now()
+
+        monitor.get_now()
+    monitor.csv_write(monitor.data, mode="a")
 
 
 go_to("Joker")
