@@ -1,7 +1,9 @@
+import email
 import os
 import random
 
 from imap_tools import MailBox, Q
+from imapclient import IMAPClient
 
 some_list = [10, 20, 323, 0, -1, 2, 12, -40, 4, 11]
 rand_list = [random.randint(-100, 100) for i in range(10)]
@@ -12,10 +14,6 @@ def get_path(file_name):
     :param file_name: name of file with type
     """
     return os.getcwd() + os.sep + 'resources' + os.sep + file_name
-
-
-# def find_min(input_list, min_num=2):
-#     return sorted(input_list)[:min_num]
 
 
 def list_min(array, min_values=2):
@@ -37,4 +35,18 @@ def mail(username, password):
     print(unseen_msg)
 
 
-mail("krakenbuh", "fearqe11")
+# mail("krakenbuh", "fearqe11")
+
+
+HOST = 'imap.gmail.com'
+USERNAME = 'krakenbuh'
+PASSWORD = 'fearqe11'
+
+with IMAPClient(HOST) as server:
+    server.login(USERNAME, PASSWORD)
+    server.select_folder('INBOX', readonly=True)
+
+    messages = server.search("UNSEEN")
+    for uid, message_data in server.fetch(messages, 'RFC822').items():
+        email_message = email.message_from_bytes(message_data[b'RFC822'])
+        print(uid, email_message.get('From'), email_message.get('Subject'), email_message.get('Flag'))
