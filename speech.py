@@ -31,7 +31,7 @@ def ttx3(input_text):
 
 
 def weather_request():
-    CITY = "Vinnytsya,ua"
+    CITY = "Vinnytsia,ua"
     KEYAPI = "79e2ef1a3de8fa7c5a8afb2d87ba778e"
     URL = "http://api.openweathermap.org/data/2.5/weather?"
     params = {"q": CITY, "units": "metric", "appid": KEYAPI}
@@ -39,14 +39,15 @@ def weather_request():
     response = requests.get(URL, params)
     data_json = response.json()
 
-    weather_param = ["main", "wind", "clouds", "name"]
+    weather_param = ["weather", "main", "wind", "clouds", "name"]
     weather_data = [data_json[k] for k in weather_param]
 
     result = "Currently in " + weather_data[-1] + " "
-    weather_main = [round(weather_data[0][k]) for k in ["temp", "feels_like", "humidity"]]
+    weather_main = [round(weather_data[1][k]) for k in ["temp", "feels_like", "humidity"]]
     result += "{0} degree. Feels like {1}. Humidity {2}%. ".format(*weather_main)
-    result += "Wind speed " + str(weather_data[1]["speed"]) + " meters per second. Cloudiness " + str(
-        weather_data[2]["all"]) + "%"
+    result += "Wind speed " + str(round(weather_data[2]["speed"])) + " meters per second. Cloudiness " + str(
+        weather_data[3]["all"]) + "%. "
+    result += weather_data[0][0]["description"].capitalize()
     print(result)
     return result
 
