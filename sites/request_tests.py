@@ -1,5 +1,6 @@
-import requests
 import datetime
+
+import requests
 
 CURRENT_DATE = datetime.datetime.now().strftime("%d.%m.%Y")
 URL = "https://api.privatbank.ua/p24api/exchange_rates?json&date="
