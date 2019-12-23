@@ -27,7 +27,7 @@ def get_response(url):
 
 def file_read(name_file):
     full_path = get_path(name_file)
-
+    print(full_path)
     with open(full_path, "r") as file:
         read_csv = csv.DictReader(file, delimiter=";")
         result = []
@@ -35,6 +35,7 @@ def file_read(name_file):
             time_response, time_sys = get_response(row.get("URL"))
             # time_response = response.elapsed.total_seconds() if response.status_code == 200 else "Null"
             result.append({"URL": row.get("URL"), "Time": time_response, "Time_sys": round(time_sys, 6)})
+    print(result)
     return result
 
 
@@ -44,6 +45,7 @@ def file_write(name_file, data):
         write_csv = csv.DictWriter(file, fieldnames=["URL", "Time", "Time_sys"], delimiter=";")
         # write_csv.writeheader()
         write_csv.writerows(data)
+        print(data)
 
 
 data_file = file_read(FILE_NAME)
