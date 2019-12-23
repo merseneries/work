@@ -40,9 +40,9 @@ def file_read(name_file):
 
 def file_write(name_file, data):
     full_path = get_path(name_file)
-    with open(full_path, "w", newline='\n') as file:
+    with open(full_path, "a", newline='\n') as file:
         write_csv = csv.DictWriter(file, fieldnames=["URL", "Time", "Time_sys"], delimiter=";")
-        write_csv.writeheader()
+        # write_csv.writeheader()
         write_csv.writerows(data)
 
 
