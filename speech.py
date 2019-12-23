@@ -3,10 +3,9 @@ import requests
 from gtts import gTTS
 from playsound import playsound
 
-text = """Nothing is set in stone yet, but the general consensus is the Senate will start its trial perhaps as early 
-as the second week in January, when it returns from its winter recess. That's what Chuck Schumer, the Democratic 
-Senate minority leader, has requested. And while Republican Senate leader Mitch McConnell may not like some of his 
-counterpart's other requests for trial procedures, he may be OK with this timeline. 
+text = """
+The White House sought to freeze aid to Ukraine just 91 minutes after President Trump spoke to President Volodymyr 
+Zelensky by phone in July, a newly-released government email has revealed.
 """
 
 
