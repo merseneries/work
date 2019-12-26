@@ -7,7 +7,8 @@ devices = AudioUtilities.GetSpeakers()
 interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
 volume = cast(interface, POINTER(IAudioEndpointVolume))
 
-# Control volume
 volume.SetMasterVolumeLevel(-0.0, None)  # max
 # volume.SetMasterVolumeLevel(-5.0, None) #72%
 # volume.SetMasterVolumeLevel(-10.0, None)  # 51%
+# volume.SetMasterVolumeLevel(-20.0, None)  # 26%
+# volume.SetMasterVolumeLevel(-65.0, None)  # 0%
