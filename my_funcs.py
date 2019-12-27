@@ -1,15 +1,27 @@
 import os
 
 
-# some_list = [10, 20, 323, 0, -1, 2, 12, -40, 4, 11]
-# rand_list = [random.randint(-100, 100) for i in range(10)]
-
-
 def get_path(file_name):
     """
+    Get current path and add file name in that with type
     :param file_name: name of file with type
     """
-    return os.getcwd() + os.sep + 'resources' + os.sep + file_name
+    return os.getcwd() + os.sep + file_name
+
+
+def get_resource(dir_name, file_name):
+    """
+    Get path to directory resources
+    :param dir_name: name of the directory, create if not exist
+    :param file_name: name of the file
+    :return: full path with directory and file name
+    """
+
+    dir_resources = r"E:\PycharmProjects\TestBad\resources"
+    file_path = dir_resources + os.sep + dir_name
+    if not os.path.exists(file_path):
+        os.makedirs(file_path)
+    return file_path + os.sep + file_name
 
 
 def list_min(array, min_values=2):
