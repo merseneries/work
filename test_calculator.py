@@ -9,7 +9,7 @@ class SimpleCalculatorTests(unittest.TestCase):
     def setUpClass(self):
         # set up appium
         desired_caps = {}
-        desired_caps["app"] = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"
+        desired_caps["app"] = "Microsoft.Windows.Cortana_cw5n1h2txyewy!App"
         self.driver = webdriver.Remote(
             command_executor='http://127.0.0.1:4723',
             desired_capabilities=desired_caps)
@@ -18,12 +18,15 @@ class SimpleCalculatorTests(unittest.TestCase):
     def tearDownClass(self):
         self.driver.quit()
 
-    def getresults(self):
-        displaytext = self.driver.find_element_by_accessibility_id("CalculatorResults").text
-        displaytext = displaytext.strip("Display is ")
-        displaytext = displaytext.rstrip(' ')
-        displaytext = displaytext.lstrip(' ')
-        return displaytext
+    # def getresults(self):
+    #     displaytext = self.driver.find_element_by_accessibility_id("CalculatorResults").text
+    #     displaytext = displaytext.strip("Display is ")
+    #     displaytext = displaytext.rstrip(' ')
+    #     displaytext = displaytext.lstrip(' ')
+    #     return displaytext
+
+    def test_get_text(self):
+        self.driver.find_element_by_name("")
 
     # def test_initialize(self):
     #     self.driver.find_element_by_name("Clear").click()
@@ -31,24 +34,24 @@ class SimpleCalculatorTests(unittest.TestCase):
     #     self.assertEqual(self.getresults(), "7")
     #     self.driver.find_element_by_name("Clear").click()
 
-    def test_addition(self):
-        self.driver.find_element_by_name("One").click()
-        self.driver.find_element_by_name("Plus").click()
-        self.driver.find_element_by_name("Seven").click()
-        self.driver.find_element_by_name("Equals").click()
-        self.assertEqual(self.getresults(), "8")
-
-    def test_combination(self):
-        self.driver.find_element_by_name("Seven").click()
-        self.driver.find_element_by_name("Multiply by").click()
-        self.driver.find_element_by_name("Nine").click()
-        self.driver.find_element_by_name("Plus").click()
-        self.driver.find_element_by_name("One").click()
-        self.driver.find_element_by_name("Equals").click()
-        self.driver.find_element_by_name("Divide by").click()
-        self.driver.find_element_by_name("Eight").click()
-        self.driver.find_element_by_name("Equals").click()
-        self.assertEqual(self.getresults(), "8")
+    # def test_addition(self):
+    #     self.driver.find_element_by_name("One").click()
+    #     self.driver.find_element_by_name("Plus").click()
+    #     self.driver.find_element_by_name("Seven").click()
+    #     self.driver.find_element_by_name("Equals").click()
+    #     self.assertEqual(self.getresults(), "8")
+    #
+    # def test_combination(self):
+    #     self.driver.find_element_by_name("Seven").click()
+    #     self.driver.find_element_by_name("Multiply by").click()
+    #     self.driver.find_element_by_name("Nine").click()
+    #     self.driver.find_element_by_name("Plus").click()
+    #     self.driver.find_element_by_name("One").click()
+    #     self.driver.find_element_by_name("Equals").click()
+    #     self.driver.find_element_by_name("Divide by").click()
+    #     self.driver.find_element_by_name("Eight").click()
+    #     self.driver.find_element_by_name("Equals").click()
+    #     self.assertEqual(self.getresults(), "8")
 
     # def test_division(self):
     #     self.driver.find_element_by_name("Eight").click()
