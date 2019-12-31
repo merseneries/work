@@ -9,7 +9,8 @@ class SimpleCalculatorTests(unittest.TestCase):
     def setUpClass(self):
         # set up appium
         desired_caps = {}
-        desired_caps["app"] = "Microsoft.Windows.Cortana_cw5n1h2txyewy!App"
+        desired_caps["app"] = r"C:\Windows\SystemApps\Microsoft.Windows.Cortana_cw5n1h2txyewy\SearchUI.exe"
+        # C:\Windows\SystemApps\Microsoft.Windows.Cortana_cw5n1h2txyewy\SearchUI.exe
         self.driver = webdriver.Remote(
             command_executor='http://127.0.0.1:4723',
             desired_capabilities=desired_caps)
@@ -26,7 +27,8 @@ class SimpleCalculatorTests(unittest.TestCase):
     #     return displaytext
 
     def test_get_text(self):
-        self.driver.find_element_by_name("")
+        cortana_msg = self.driver.find_element_by_class_name("TextBlock").text
+        print(cortana_msg)
 
     # def test_initialize(self):
     #     self.driver.find_element_by_name("Clear").click()
