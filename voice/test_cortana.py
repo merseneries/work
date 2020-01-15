@@ -195,7 +195,6 @@ class Test_Cortana(unittest.TestCase):
         # check if correct convert result
         cortana_result = self.get_screenshot_text(area=(55, 561, 121, 30))
         self.assertTrue(self.check_response(str(actual_convert), cortana_result))
-        print(cortana_result)
 
     def test_volume(self):
         volume = Volume()
@@ -240,6 +239,27 @@ class Test_Cortana(unittest.TestCase):
         self.open_cortana()
         self.say("Delete all alarms")
 
+    def test_time(self):
+        text_time = "What time in Tokyo?"
+        self.say(text_time)
+
+        # check if response about time
+        cortana_response = self.driver.find_element_by_accessibility_id("GreetingLine1").text
+        self.assertTrue(self.check_response(text_time, cortana_response), "Search not about time")
+
+        cortana_result = self.get_screenshot_text(area=(150, 560, 200, 80)).replace("\n\n", " ")
+        actual_tokyo = datetime.datetime.now(pytz.timezone("Asia/Tokyo")) \
+            .strftime(" %I:%M %p %a, %b %d, %Y").replace(" 0", "")
+        self.assertEqual(actual_tokyo, cortana_result, "Result doesn't equal")
+
+    def test_image(self):
+        text_image = "Show images of dogs"
+        self.say(text_image)
+
+        # check if response about image
+        cortana_response = self.driver.find_element_by_accessibility_id("GreetingLine1").text
+        self.assertTrue(self.check_response(text_image, cortana_response), "Search not about images")
+
     # def test_route(self):
     #     text_route = "Show me route from London to Berlin"
     #     self.say(text_route)
@@ -261,18 +281,6 @@ class Test_Cortana(unittest.TestCase):
     #     self.say(text_music, 8)
     #     autogui.press("volumedown", presses=4)
     #     autogui.press("enter")
-
-    def test_time(self):
-        text_time = "What time in Tokyo?"
-        self.say(text_time)
-
-        # check if response about time
-        cortana_response = self.driver.find_element_by_accessibility_id("GreetingLine1").text
-        self.assertTrue(self.check_response(text_time, cortana_response), "Search not about time")
-
-        cortana_result = self.get_screenshot_text(area=(150, 560, 200, 80)).replace("\n\n", " ")
-        actual_tokyo = datetime.datetime.now(pytz.timezone("Asia/Tokyo")).strftime("%I:%M %p %a, %b %d, %Y")
-        self.assertEqual(actual_tokyo, cortana_result, "Result doesn't equal")
     #
     # def test_movie(self):
     #     test_movie = "Open Movies & TV"
@@ -281,14 +289,6 @@ class Test_Cortana(unittest.TestCase):
     #     autogui.press("enter")
     #     autogui.sleep(1)
     #     autogui.press("enter")
-
-    def test_image(self):
-        text_image = "Show images of dogs"
-        self.say(text_image)
-
-        # check if response about image
-        cortana_response = self.driver.find_element_by_accessibility_id("GreetingLine1").text
-        self.assertTrue(self.check_response(text_image, cortana_response), "Search not about images")
     #
     # def test_email(self):
     #     text_email = "Send email to Jared about What you will do tomorrow?"
