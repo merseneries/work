@@ -38,6 +38,7 @@ class Test_Cortana(unittest.TestCase):
         self.open_cortana()
 
     def tearDown(self):
+        autogui.sleep(3)
         autogui.press("esc")
         print("Closed...")
 
@@ -128,17 +129,18 @@ class Test_Cortana(unittest.TestCase):
     
     """
 
-    def test_text(self):
-        text_question = "Who was the first President of USA?"
+    def test_question(self):
+        text_question = "Who is the first President of USA?"
         self.say(text_question)
 
         # check if response about President
-        cortana_response = self.driver.find_element_by_class_name("TextBlock").text
-        self.assertIn("president", cortana_response, "Search not about President")
+        cortana_response = self.driver.find_element_by_accessibility_id("GreetingLine1").text
+        self.assertTrue(self.check_response(text_question, cortana_response),
+                        "Search not correct. Actual: '{}'. Expected: '{}'".format(text_question, cortana_response))
 
         # check if result correct President
-        cortana_result = self.get_screenshot_text(area=(45, 735, 340, 55))
-        woflram_result = self.get_woflramalpha_result(text_question)
+        cortana_result = self.get_screenshot_text(area=(178, 600, 200, 40))
+        woflram_result = self.get_woflramalpha_result(text_question).split(" (", 1)[0]
         self.assertIn(cortana_result, woflram_result, "Result not correct")
 
     def test_weather(self):
@@ -167,98 +169,98 @@ class Test_Cortana(unittest.TestCase):
         cortana_result = self.driver.find_element_by_accessibility_id("rcHead").text
         self.assertEqual(str(math_actual), cortana_result, "{0} don't equal {1}".format(math_actual, cortana_result))
 
-    def test_open_calendar(self):
-        text_open = "calendar"
-        self.say(text_open)
-
-        # check if response about calendar
-        # cortana_response = self.driver.find_element_by_class_name("WebView").text
-        cortana_response = self.get_screenshot_text(area=(50, 500, 325, 60))
-        self.assertTrue(self.check_response(text_open, cortana_response), "Search not about calendar")
-        # self.assertIn(text_open, cortana_response,"Trying to open '{0}' but response is '{1}'".format(text_open, cortana_response))
-        self.wait_listen()
-        self.say(text_open)
-
-        # check if correct program opened
-        cortana_result = self.get_screenshot_text(area=(60, 505, 325, 40))
-        self.assertTrue(self.check_response(text_open, cortana_result), "Must opened calendar")
-
-    def test_convert(self):
-        text_convert = "How much seconds in week"
-        actual_convert = 7 * 24 * 60 * 60
-        self.say(text_convert)
-
-        # check if response about convert
-        cortana_response = self.get_screenshot_text(area=(55, 532, 100, 25))
-        self.assertTrue(self.check_response(text_convert, cortana_response), "Search not about convert")
-
-        # check if correct convert result
-        cortana_result = self.get_screenshot_text(area=(55, 561, 121, 30))
-        self.assertTrue(self.check_response(str(actual_convert), cortana_result))
-
-    def test_volume(self):
-        volume = Volume()
-        start_level = volume.get_level()
-
-        text_volume = "Decrease volume by 30"
-        self.say(text_volume)
-        changed_level = volume.get_level()
-
-        print("Start", start_level, "Changed", changed_level)
-        self.assertNotEqual(start_level, changed_level, "Volume didn't change")
-
-        volume.set_volume(100)
-
-    def test_open_excel(self):
-        excel_process = "EXCEL.EXE"
-
-        text_open = "Open excel"
-        self.say(text_open)
-
-        # check if response about excel
-        cortana_response = self.get_screenshot_text(area=(50, 490, 150, 50))
-        self.assertTrue(self.check_response(text_open, cortana_response), "Search not about excel")
-
-        time.sleep(5)
-        # check if excel opened
-        self.assertTrue(Process.is_alive(excel_process), "Excel didn't open")
-
-        Process.kill(excel_process)
-
-    def test_alarm(self):
-        text_alarm = "Set alarm tomorrow at 11 am"
-        self.say(text_alarm, 6)
-
-        # check if response about set alarm
-        cortana_response = self.get_screenshot_text(area=(55, 560, 150, 55))
-        self.assertTrue(self.check_response(text_alarm, cortana_response), "Search not about alarm")
-
-        Process.open(PATH_ALARM)
-        # add check if system set alarm in app
-
-        self.open_cortana()
-        self.say("Delete all alarms")
-
-    def test_time(self):
-        text_time = "What time in Tokyo?"
-        self.say(text_time)
-
-        # check if response about time
-        cortana_response = self.driver.find_element_by_accessibility_id("GreetingLine1").text
-        self.assertTrue(self.check_response(text_time, cortana_response), "Search not about time")
-
-        cortana_result = self.get_screenshot_text(area=(150, 560, 200, 80)).replace("\n\n", " ")
-        actual_tokyo = datetime.datetime.now(pytz.timezone("Asia/Tokyo")) \
-            .strftime(" %I:%M %p %a, %b %d, %Y").replace(" 0", "")
-        self.assertEqual(actual_tokyo, cortana_result, "Result doesn't equal")
-
-    def test_image(self):
-        text_image = "Show images of dogs"
-        self.say(text_image)
-
-        # check if response about image
-        cortana_response = self.driver.find_element_by_accessibility_id("GreetingLine1").text
-        self.assertTrue(self.check_response(text_image, cortana_response), "Search not about images")
+    # def test_open_calendar(self):
+    #     text_open = "calendar"
+    #     self.say(text_open)
+    #
+    #     # check if response about calendar
+    #     # cortana_response = self.driver.find_element_by_class_name("WebView").text
+    #     cortana_response = self.get_screenshot_text(area=(50, 500, 325, 60))
+    #     self.assertTrue(self.check_response(text_open, cortana_response), "Search not about calendar")
+    #     # self.assertIn(text_open, cortana_response,"Trying to open '{0}' but response is '{1}'".format(text_open, cortana_response))
+    #     self.wait_listen()
+    #     self.say(text_open)
+    #
+    #     # check if correct program opened
+    #     cortana_result = self.get_screenshot_text(area=(60, 505, 325, 40))
+    #     self.assertTrue(self.check_response(text_open, cortana_result), "Must opened calendar")
+    #
+    # def test_convert(self):
+    #     text_convert = "How much seconds in week"
+    #     actual_convert = 7 * 24 * 60 * 60
+    #     self.say(text_convert)
+    #
+    #     # check if response about convert
+    #     cortana_response = self.get_screenshot_text(area=(55, 532, 100, 25))
+    #     self.assertTrue(self.check_response(text_convert, cortana_response), "Search not about convert")
+    #
+    #     # check if correct convert result
+    #     cortana_result = self.get_screenshot_text(area=(55, 561, 121, 30))
+    #     self.assertTrue(self.check_response(str(actual_convert), cortana_result))
+    #
+    # def test_volume(self):
+    #     volume = Volume()
+    #     start_level = volume.get_level()
+    #
+    #     text_volume = "Decrease volume by 30"
+    #     self.say(text_volume)
+    #     changed_level = volume.get_level()
+    #
+    #     print("Start", start_level, "Changed", changed_level)
+    #     self.assertNotEqual(start_level, changed_level, "Volume didn't change")
+    #
+    #     volume.set_volume(100)
+    #
+    # def test_open_excel(self):
+    #     excel_process = "EXCEL.EXE"
+    #
+    #     text_open = "Open excel"
+    #     self.say(text_open)
+    #
+    #     # check if response about excel
+    #     cortana_response = self.get_screenshot_text(area=(50, 490, 150, 50))
+    #     self.assertTrue(self.check_response(text_open, cortana_response), "Search not about excel")
+    #
+    #     time.sleep(5)
+    #     # check if excel opened
+    #     self.assertTrue(Process.is_alive(excel_process), "Excel didn't open")
+    #
+    #     Process.kill(excel_process)
+    #
+    # def test_alarm(self):
+    #     text_alarm = "Set alarm tomorrow at 11 am"
+    #     self.say(text_alarm, 6)
+    #
+    #     # check if response about set alarm
+    #     cortana_response = self.get_screenshot_text(area=(55, 560, 150, 55))
+    #     self.assertTrue(self.check_response(text_alarm, cortana_response), "Search not about alarm")
+    #
+    #     Process.open(PATH_ALARM)
+    #     # add check if system set alarm in app
+    #
+    #     self.open_cortana()
+    #     self.say("Delete all alarms")
+    #
+    # def test_time(self):
+    #     text_time = "What time in Tokyo?"
+    #     self.say(text_time)
+    #
+    #     # check if response about time
+    #     cortana_response = self.driver.find_element_by_accessibility_id("GreetingLine1").text
+    #     self.assertTrue(self.check_response(text_time, cortana_response), "Search not about time")
+    #
+    #     cortana_result = self.get_screenshot_text(area=(150, 560, 200, 80)).replace("\n\n", " ")
+    #     actual_tokyo = datetime.datetime.now(pytz.timezone("Asia/Tokyo")) \
+    #         .strftime(" %I:%M %p %a, %b %d, %Y").replace(" 0", "")
+    #     self.assertEqual(actual_tokyo, cortana_result, "Result doesn't equal")
+    #
+    # def test_image(self):
+    #     text_image = "Show images of dogs"
+    #     self.say(text_image)
+    #
+    #     # check if response about image
+    #     cortana_response = self.driver.find_element_by_accessibility_id("GreetingLine1").text
+    #     self.assertTrue(self.check_response(text_image, cortana_response), "Search not about images")
 
     # def test_route(self):
     #     text_route = "Show me route from London to Berlin"
