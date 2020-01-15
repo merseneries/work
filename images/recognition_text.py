@@ -1,5 +1,5 @@
 import re
-
+import wolframalpha
 import pytesseract
 from PIL import Image
 
@@ -20,4 +20,7 @@ def re_search(text):
     return [v[0] for v in math_result]
 
 
-print(re_search(get_text()))
+# print(re_search(get_text()))
+client = wolframalpha.Client("TPLGT3-ETLWX6G6X3")
+res = client.query("weather in Vinnytsya")
+print(next(res.results).text)
