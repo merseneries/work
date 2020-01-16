@@ -2,7 +2,6 @@ import os
 import subprocess
 import re
 import psutil
-from appium import webdriver
 
 
 def get_path(file_name):
@@ -81,6 +80,7 @@ class Process:
         for process in psutil.process_iter():
             if process.name() == name:
                 return True
+        return False
 
     @staticmethod
     def kill(name):
