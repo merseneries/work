@@ -4,20 +4,23 @@ import unittest
 import pyautogui as autogui
 import pytesseract
 import pyttsx3
+import re
 import pytz
 import selenium
 import wolframalpha
 from appium import webdriver
 from monitor import Monitor
-from my_funcs import Volume, Process
+from my_funcs import Volume, Process, csv_write
 
 BROWSER = "Open microsoft.com"
 PATH_CORTANA = r"C:\Windows\SystemApps\Microsoft.Windows.Cortana_cw5n1h2txyewy\SearchUI.exe"
-PATH_WINDRIVER = r"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe"
 PATH_ALARM = r"E:\PycharmProjects\TestBad\resources\Alarm.lnk"
+PATH_WIN_DRIVER = r"E:\Programs\WindowsApplicationDriver\WinAppDriver.exe"
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 counter_test = 0
+field_names = ["Test case ID", "Description", "Command", "Expected result",
+               "Pass/Fail", "Time to execute", "Error message"]
 
 
 class Test_Cortana(unittest.TestCase):
@@ -26,30 +29,35 @@ class Test_Cortana(unittest.TestCase):
     def setUpClass(self):
         self.command = ""
         self.expected_result = ""
-        desired_caps = {}
+        self.tests_result = []
+        desired_caps = {"app": PATH_CORTANA}
 
         autogui.hotkey("win", "c")
-        desired_caps["app"] = PATH_CORTANA
         self.driver = webdriver.Remote(command_executor='http://127.0.0.1:4723', desired_capabilities=desired_caps)
 
         autogui.press("esc")
         self.monitor = Monitor("SearchUI.exe")
 
-    # @classmethod
-    # def tearDownClass(self):
-    #     self.driver.quit()
+    @classmethod
+    def tearDownClass(self):
+        self.driver.quit()
+        self.tests_result.insert(0, field_names)
+        csv_write("tests_result", self.tests_result)
+        Process.kill("SearchUI.exe")
 
     def setUp(self):
         self.engine = pyttsx3.init()
         self.engine.setProperty('rate', 110)
         self.say("Hey Cortana")
         print("Opening...")
+        self.check_cortana()
 
     def tearDown(self):
         autogui.press("esc")
         if self.is_exist("Close"):
             self.driver.find_element_by_name("Close").click()
-        # print("Closed...")
+            print("Closed with find element")
+        print("Closed...")
 
     def open_cortana(self):
         self.engine.say("Hey Cortana")
@@ -94,22 +102,22 @@ class Test_Cortana(unittest.TestCase):
         return any(i for i in actual if i in expected)
 
     def check_cortana(self):
-        result = not self.is_exist("Cortana")
-        if result:
+        try:
+            self.driver.find_element_by_accessibility_id("TipTextBlock")
+        except Exception:
             autogui.hotkey("win", "c")
-            print("pressed hotkeys")
-        print(result)
+            print("Pressed hotkeys for open Cortana")
 
     def is_exist(self, name):
         try:
-            result = self.driver.find_element_by_name(name).is_enabled()
+            result = self.driver.find_element_by_name(name)
         except selenium.common.exceptions.NoSuchElementException:
             return False
         except selenium.common.exceptions.NoSuchWindowException:
             return False
         return result
 
-    def monitor(iter=1):
+    def monitor(iter=1, monitor=False):
         def time_recorder(func):
             def wrapper(self):
                 error_msg = "-"
@@ -132,17 +140,21 @@ class Test_Cortana(unittest.TestCase):
                     global counter_test
                     counter_test = counter_test + 1
                     test_result = "Pass" if error_msg == "-" else "Fail"
+                    time_spend = round(end - start, 3)
+                    error_msg = str(error_msg).replace("\n", "")
 
                     print("---------------------------")
                     print("Number of test #" + str(counter_test))
                     print("Description:", func.__name__)
-                    # print("Test counter #{}".format(i + 1))
                     print("Command:", self.command)
                     print("Expected result:", self.expected_result)
                     print("Error:", error_msg)
                     print("Test result:", test_result)
-                    print("Time spend:", round(end - start, 3))
+                    print("Time spend:", time_spend)
                     print("---------------------------")
+
+                    self.tests_result.append([counter_test, func.__name__, self.command,
+                                              self.expected_result, test_result, time_spend, error_msg])
 
             return wrapper
 
@@ -158,8 +170,7 @@ class Test_Cortana(unittest.TestCase):
     def test_alarm_set(self):
         text_alarm = "Set alarm tomorrow at 11 am"
         self.command = text_alarm
-        self.check_cortana()
-        self.say(text_alarm, 5)
+        self.say(text_alarm, 4)
 
         # check if response about set alarm
         cortana_response = self.get_screenshot_text(area=(55, 560, 150, 55))
@@ -175,7 +186,7 @@ class Test_Cortana(unittest.TestCase):
 
         autogui.hotkey("win", "c")
         self.say("Delete all alarms")
-        autogui.sleep(3)
+        autogui.sleep(1)
         Process.kill("Time.exe")
 
     @monitor(iter=1)
@@ -183,7 +194,7 @@ class Test_Cortana(unittest.TestCase):
         text_math = "2 multiply by 18 equal"
         math_expected = 2 * 18
         self.command = text_math
-        self.check_cortana()
+
         self.say(text_math)
 
         # check if response about calculation
@@ -198,14 +209,12 @@ class Test_Cortana(unittest.TestCase):
         self.assertEqual(str(math_expected), cortana_result,
                          "{0} don't equal {1}".format(math_expected, cortana_result))
 
-        autogui.sleep(3)
-
     @monitor(iter=1)
     def test_converter_week(self):
         text_convert = "How much seconds in week"
         expected_convert = str(7 * 24 * 60 * 60)
         self.command = text_convert
-        self.check_cortana()
+
         self.say(text_convert)
 
         # check if response about convert
@@ -220,13 +229,12 @@ class Test_Cortana(unittest.TestCase):
         self.assertEqual(expected_convert, cortana_result,
                          "{0} don't equal {1}".format(expected_convert, cortana_result))
 
-        autogui.sleep(5)
+        autogui.sleep(2)
 
     @monitor(iter=1)
     def test_image_search(self):
         text_image = "Show images of dogs"
         self.command = text_image
-        self.check_cortana()
         self.say(text_image)
 
         # check if response about image
@@ -239,7 +247,6 @@ class Test_Cortana(unittest.TestCase):
     def test_open_calendar(self):
         text_open = "calendar"
         self.command = text_open
-        self.check_cortana()
         self.say(text_open)
 
         # check if response about calendar
@@ -263,7 +270,6 @@ class Test_Cortana(unittest.TestCase):
     def test_some_question(self):
         text_question = "Who is the first President of USA?"
         self.command = text_question
-        self.check_cortana()
         self.say(text_question)
 
         # check if response about President
@@ -276,7 +282,7 @@ class Test_Cortana(unittest.TestCase):
         cortana_result = self.get_screenshot_text(area=(178, 600, 200, 40))
         woflram_result = self.get_woflramalpha_result(text_question).split(" (", 1)[0]
         self.expected_result = woflram_result
-        self.assertIn(cortana_result, woflram_result, "Result not correct")
+        self.assertEqual(cortana_result, woflram_result, "Result not correct")
 
     @monitor(iter=1)
     def test_volume_sound(self):
@@ -285,13 +291,13 @@ class Test_Cortana(unittest.TestCase):
 
         text_volume = "Decrease volume by 30"
         self.command = text_volume
-        self.check_cortana()
         self.say(text_volume)
         changed_level = volume.get_level()
 
         self.expected_result = changed_level
         self.assertNotEqual(start_level, changed_level, "Volume didn't change")
 
+        # autogui.press("volumedown", presses=4)
         volume.set_volume(100)
 
     @monitor(iter=1)
@@ -300,7 +306,6 @@ class Test_Cortana(unittest.TestCase):
 
         text_open = "Open excel"
         self.command = text_open
-        self.check_cortana()
         self.say(text_open)
 
         # check if response about excel
@@ -320,7 +325,6 @@ class Test_Cortana(unittest.TestCase):
     def test_time_city(self):
         text_time = "What time in Tokyo?"
         self.command = text_time
-        self.check_cortana()
         self.say(text_time, 4)
 
         # check if response about time
@@ -332,7 +336,7 @@ class Test_Cortana(unittest.TestCase):
         cortana_result = self.get_screenshot_text(area=(150, 560, 200, 80)).replace("\n\n", " ")
         expected_tokyo = datetime.datetime.now(pytz.timezone("Asia/Tokyo")) \
             .strftime(" %I:%M %p %a, %b %d, %Y").replace(" 0", "")
-        expected_tokyo = expected_tokyo
+        expected_tokyo = expected_tokyo[1:] if expected_tokyo[0] == " " else expected_tokyo
         self.expected_result = expected_tokyo
         self.assertEqual(expected_tokyo, cortana_result, "Result doesn't equal")
 
@@ -340,7 +344,6 @@ class Test_Cortana(unittest.TestCase):
     def test_weather_city(self):
         text_city = "weather in Vinnytsya"
         self.command = text_city
-        self.check_cortana()
         self.say(text_city, 4)
 
         # check if response about weather
@@ -350,15 +353,45 @@ class Test_Cortana(unittest.TestCase):
                         "Search not correct. Expected: '{}'. Actual: '{}'".format(text_city, cortana_response))
 
         # check if correct city selected
-        cortana_result = self.get_screenshot_text(area=(50, 525, 160, 31))
-
-        # self.expected_result =
+        cortana_result = self.get_screenshot_text(area=(50, 525, 160, 31)).split(",")[0]
+        text_city = text_city.split(" ")[-1]
+        self.expected_result = text_city
         self.assertTrue(self.check_response(text_city, cortana_result),
                         "Incorrect city. Expected: '{}'. Actual: '{}'".format(text_city, cortana_result))
 
-    # def test_route(self):
-    #     text_route = "Show me route from London to Berlin"
-    #     self.say(text_route)
+    @monitor(iter=1)
+    def test_music(self):
+        text_music = "Open Groove music"
+        self.command = text_music
+        self.say(text_music, 6)
+
+        autogui.press("enter")
+        actual_open = Process.is_alive("Music.UI.exe")
+        self.expected_result = True
+        self.assertTrue(actual_open, "Music didn't open")
+
+        autogui.sleep(3)
+        Process.kill("Music.UI.exe")
+
+    @monitor(iter=1)
+    def test_movie(self):
+        text_movie = "Open Movies & TV"
+        self.command = text_movie
+        self.say(text_movie, 6)
+
+        autogui.press("enter")
+        autogui.sleep(1)
+        autogui.press("enter")
+        actual_open = Process.is_alive("Video.UI.exe")
+        self.expected_result = True
+        self.assertTrue(actual_open, "Video didn't open")
+
+        autogui.sleep(3)
+        Process.kill("Video.UI.exe")
+
+    # def test_email(self):
+    #     text_email = "Send email to Jared about What you will do tomorrow?"
+    #     self.say(text_email)
 
     # def test_translate(self):
     #     text_translate = "Translate extraordinary human to ukrainian"
@@ -368,27 +401,13 @@ class Test_Cortana(unittest.TestCase):
     #     # cortana_result = self.get_screenshot_text(area=(60, 710, 200, 45))
     #     # self.assertEqual("надзвичайна людина", cortana_result, "Translate incorrect")
 
+    # def test_route(self):
+    #     text_route = "Show me route from London to Berlin"
+    #     self.say(text_route)
+
     # def test_video(self):
     #     text_time = "Play video in YouTube about Iron man"
     #     self.say(text_time)
-
-    # def test_music(self):
-    #     text_music = "Open Groove music"
-    #     self.say(text_music, 8)
-    #     autogui.press("volumedown", presses=4)
-    #     autogui.press("enter")
-    #
-    # def test_movie(self):
-    #     test_movie = "Open Movies & TV"
-    #     self.say(test_movie, 8)
-    #
-    #     autogui.press("enter")
-    #     autogui.sleep(1)
-    #     autogui.press("enter")
-    #
-    # def test_email(self):
-    #     text_email = "Send email to Jared about What you will do tomorrow?"
-    #     self.say(text_email)
 
     """
     

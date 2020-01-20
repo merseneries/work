@@ -2,6 +2,7 @@ import os
 import subprocess
 import re
 import psutil
+import csv
 
 
 def get_path(file_name):
@@ -40,6 +41,14 @@ def kill_process(name):
     for process in psutil.process_iter():
         if process.name() == name:
             process.kill()
+
+
+def csv_write(file_name, data):
+    file_name = file_name + ".csv"
+    file_path = get_resource("", file_name)
+    with open(file_path, "w", newline='\n') as file:
+        write_csv = csv.writer(file, delimiter=",")
+        write_csv.writerows(data)
 
 
 class Volume:
