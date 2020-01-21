@@ -5,12 +5,18 @@ import pyautogui as autogui
 import pytesseract
 import pyttsx3
 import re
+import os
+import sys
 import pytz
+import pytest
 import selenium
 import wolframalpha
+import allure
 from appium import webdriver
-from monitor import Monitor
-from my_funcs import Volume, Process, csv_write
+
+sys.path.append(r"E:\PycharmProjects\TestBad")
+from local_package.monitor import Monitor
+from local_package.funcs import Volume, Process, csv_write
 
 BROWSER = "Open microsoft.com"
 PATH_CORTANA = r"C:\Windows\SystemApps\Microsoft.Windows.Cortana_cw5n1h2txyewy\SearchUI.exe"
@@ -18,6 +24,7 @@ PATH_ALARM = r"E:\PycharmProjects\TestBad\resources\Alarm.lnk"
 PATH_WIN_DRIVER = r"E:\Programs\WindowsApplicationDriver\WinAppDriver.exe"
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
+autogui.FAILSAFE = False
 counter_test = 0
 field_names = ["Test case ID", "Description", "Command", "Expected result",
                "Pass/Fail", "Time to execute", "Error message"]
@@ -32,6 +39,7 @@ class Test_Cortana(unittest.TestCase):
         self.tests_result = []
         desired_caps = {"app": PATH_CORTANA}
 
+        os.startfile(PATH_WIN_DRIVER)
         autogui.hotkey("win", "c")
         self.driver = webdriver.Remote(command_executor='http://127.0.0.1:4723', desired_capabilities=desired_caps)
 
@@ -44,6 +52,7 @@ class Test_Cortana(unittest.TestCase):
         self.tests_result.insert(0, field_names)
         csv_write("tests_result", self.tests_result)
         Process.kill("SearchUI.exe")
+        Process.kill("WinAppDriver.exe")
 
     def setUp(self):
         self.engine = pyttsx3.init()
@@ -60,7 +69,9 @@ class Test_Cortana(unittest.TestCase):
         print("Closed...")
 
     def open_cortana(self):
-        self.engine.say("Hey Cortana")
+        self.engine = pyttsx3.init()
+        self.engine.setProperty('rate', 110)
+        self.say("Hey Cortana")
 
     def say(self, text, timer=2):
         self.engine.say(text)
@@ -131,6 +142,7 @@ class Test_Cortana(unittest.TestCase):
                         func(self)
                     except Exception as error:
                         error_msg = error
+                        # raise error
                     end = time.time()
                     # self.monitor.end()
 
@@ -166,6 +178,7 @@ class Test_Cortana(unittest.TestCase):
     
     """
 
+    @allure.step("Test set alarm and check if it opened")
     @monitor(iter=1)
     def test_alarm_set(self):
         text_alarm = "Set alarm tomorrow at 11 am"
@@ -176,7 +189,7 @@ class Test_Cortana(unittest.TestCase):
         cortana_response = self.get_screenshot_text(area=(55, 560, 150, 55))
         self.expected_result = text_alarm
         self.assertTrue(self.check_response(text_alarm, cortana_response),
-                        "Search not correct. Expected: '{}'. Actual: '{}'".format(text_alarm, cortana_response))
+                        "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_alarm, cortana_response))
 
         # add check if system set alarm in app
         Process.open(PATH_ALARM)
@@ -186,9 +199,10 @@ class Test_Cortana(unittest.TestCase):
 
         autogui.hotkey("win", "c")
         self.say("Delete all alarms")
-        autogui.sleep(1)
+        autogui.sleep(2)
         Process.kill("Time.exe")
 
+    @allure.step("Test check calculator operation")
     @monitor(iter=1)
     def test_calculator_operation(self):
         text_math = "2 multiply by 18 equal"
@@ -201,7 +215,7 @@ class Test_Cortana(unittest.TestCase):
         cortana_response = self.driver.find_element_by_class_name("WebView").text
         self.expected_result = text_math
         self.assertTrue(self.check_response(text_math, cortana_response),
-                        "Search not correct. Expected: '{}'. Actual: '{}'".format(text_math, cortana_response))
+                        "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_math, cortana_response))
 
         # check if correct calculation
         cortana_result = self.driver.find_element_by_accessibility_id("rcHead").text
@@ -209,6 +223,7 @@ class Test_Cortana(unittest.TestCase):
         self.assertEqual(str(math_expected), cortana_result,
                          "{0} don't equal {1}".format(math_expected, cortana_result))
 
+    @allure.step("Test check how much seconds in week")
     @monitor(iter=1)
     def test_converter_week(self):
         text_convert = "How much seconds in week"
@@ -221,7 +236,7 @@ class Test_Cortana(unittest.TestCase):
         cortana_response = self.get_screenshot_text(area=(55, 532, 100, 25))
         self.expected_result = text_convert
         self.assertTrue(self.check_response(text_convert, cortana_response),
-                        "Search not correct. Expected: '{}'. Actual: '{}'".format(text_convert, cortana_response))
+                        "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_convert, cortana_response))
 
         # check if correct convert result
         cortana_result = self.get_screenshot_text(area=(55, 561, 121, 30))
@@ -231,6 +246,7 @@ class Test_Cortana(unittest.TestCase):
 
         autogui.sleep(2)
 
+    @allure.step("Test check image of dogs")
     @monitor(iter=1)
     def test_image_search(self):
         text_image = "Show images of dogs"
@@ -241,8 +257,9 @@ class Test_Cortana(unittest.TestCase):
         cortana_response = self.driver.find_element_by_accessibility_id("GreetingLine1").text
         self.expected_result = text_image
         self.assertTrue(self.check_response(text_image, cortana_response),
-                        "Search not correct. Expected: '{}'. Actual: '{}'".format(text_image, cortana_response))
+                        "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_image, cortana_response))
 
+    @allure.step("Test check if calendar opened")
     @monitor(iter=1)
     def test_open_calendar(self):
         text_open = "calendar"
@@ -253,7 +270,7 @@ class Test_Cortana(unittest.TestCase):
         cortana_response = self.get_screenshot_text(area=(50, 500, 325, 60))
         self.expected_result = text_open
         self.assertTrue(self.check_response(text_open, cortana_response),
-                        "Search not correct. Expected: '{}'. Actual: '{}'".format(text_open, cortana_response))
+                        "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_open, cortana_response))
         self.wait_listen()
         self.say(text_open, 7)
 
@@ -266,6 +283,7 @@ class Test_Cortana(unittest.TestCase):
         self.assertTrue(calendar_opened, "Outlook didn't open")
         Process.kill("OUTLOOK.EXE")
 
+    @allure.step("Test say question and check response")
     @monitor(iter=1)
     def test_some_question(self):
         text_question = "Who is the first President of USA?"
@@ -276,7 +294,7 @@ class Test_Cortana(unittest.TestCase):
         cortana_response = self.driver.find_element_by_accessibility_id("GreetingLine1").text
         self.expected_result = text_question
         self.assertTrue(self.check_response(text_question, cortana_response),
-                        "Search not correct. Expected: '{}'. Actual: '{}'".format(text_question, cortana_response))
+                        "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_question, cortana_response))
 
         # check if result correct President
         cortana_result = self.get_screenshot_text(area=(178, 600, 200, 40))
@@ -284,6 +302,7 @@ class Test_Cortana(unittest.TestCase):
         self.expected_result = woflram_result
         self.assertEqual(cortana_result, woflram_result, "Result not correct")
 
+    @allure.step("Test decrease volume")
     @monitor(iter=1)
     def test_volume_sound(self):
         volume = Volume()
@@ -300,6 +319,7 @@ class Test_Cortana(unittest.TestCase):
         # autogui.press("volumedown", presses=4)
         volume.set_volume(100)
 
+    @allure.step("Test open excel")
     @monitor(iter=1)
     def test_open_excel(self):
         excel_process = "EXCEL.EXE"
@@ -312,7 +332,7 @@ class Test_Cortana(unittest.TestCase):
         cortana_response = self.get_screenshot_text(area=(50, 490, 150, 50))
         self.expected_result = text_open
         self.assertTrue(self.check_response(text_open, cortana_response),
-                        "Search not correct. Expected: '{}'. Actual: '{}'".format(text_open, cortana_response))
+                        "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_open, cortana_response))
 
         time.sleep(7)
         # check if excel opened
@@ -321,6 +341,7 @@ class Test_Cortana(unittest.TestCase):
 
         Process.kill(excel_process)
 
+    @allure.step("Test check what time in Tokyo")
     @monitor(iter=1)
     def test_time_city(self):
         text_time = "What time in Tokyo?"
@@ -331,7 +352,7 @@ class Test_Cortana(unittest.TestCase):
         cortana_response = self.driver.find_element_by_accessibility_id("GreetingLine1").text
         self.expected_result = text_time
         self.assertTrue(self.check_response(text_time, cortana_response),
-                        "Search not correct. Expected: '{}'. Actual: '{}'".format(text_time, cortana_response))
+                        "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_time, cortana_response))
 
         cortana_result = self.get_screenshot_text(area=(150, 560, 200, 80)).replace("\n\n", " ")
         expected_tokyo = datetime.datetime.now(pytz.timezone("Asia/Tokyo")) \
@@ -340,6 +361,7 @@ class Test_Cortana(unittest.TestCase):
         self.expected_result = expected_tokyo
         self.assertEqual(expected_tokyo, cortana_result, "Result doesn't equal")
 
+    @allure.step("Test check weather in Vinnytsya")
     @monitor(iter=1)
     def test_weather_city(self):
         text_city = "weather in Vinnytsya"
@@ -350,15 +372,16 @@ class Test_Cortana(unittest.TestCase):
         cortana_response = self.get_screenshot_text(area=(50, 471, 340, 30))
         self.expected_result = text_city
         self.assertTrue(self.check_response(text_city, cortana_response),
-                        "Search not correct. Expected: '{}'. Actual: '{}'".format(text_city, cortana_response))
+                        "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_city, cortana_response))
 
         # check if correct city selected
         cortana_result = self.get_screenshot_text(area=(50, 525, 160, 31)).split(",")[0]
         text_city = text_city.split(" ")[-1]
         self.expected_result = text_city
         self.assertTrue(self.check_response(text_city, cortana_result),
-                        "Incorrect city. Expected: '{}'. Actual: '{}'".format(text_city, cortana_result))
+                        "Incorrect city. Expected: '{}'. Actual: '<{}>'".format(text_city, cortana_result))
 
+    @allure.step("Test open and play music")
     @monitor(iter=1)
     def test_music(self):
         text_music = "Open Groove music"
@@ -373,6 +396,7 @@ class Test_Cortana(unittest.TestCase):
         autogui.sleep(3)
         Process.kill("Music.UI.exe")
 
+    @allure.step("Test open Movies & TV and play movie")
     @monitor(iter=1)
     def test_movie(self):
         text_movie = "Open Movies & TV"

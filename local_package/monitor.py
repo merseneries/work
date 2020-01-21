@@ -4,7 +4,7 @@ import time
 import os
 import csv
 from multiprocessing import Process, freeze_support
-from my_funcs import get_resource
+from local_package.funcs import get_resource
 
 
 class Monitor:
@@ -23,7 +23,7 @@ class Monitor:
         file_name = self.name.rsplit(".", 1)[0] + ".csv"
         file_path = get_resource("", file_name)
         # mode = "a" if mode != "w" else "w"
-        # fieldnames = ["Date", "Process_name", "Cpu_percent", "Memory_percent", "Memory_rss", "Memory_vms"],
+        # field_names = ["Date", "Process_name", "Cpu_percent", "Memory_percent", "Memory_rss", "Memory_vms"],
         with open(file_path, "a", newline='\n') as file:
             write_csv = csv.writer(file, delimiter=";")
             write_csv.writerow(data)

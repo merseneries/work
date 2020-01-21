@@ -1,13 +1,13 @@
-Test case ID,Description,Command,Expected result,Pass/Fail,Time to execute,Error message
-1,test_alarm_set,Set alarm tomorrow at 11 am,True,Pass,15.161,-
-2,test_calculator_operation,2 multiply by 18 equal,36,Pass,5.878,-
-3,test_converter_week,How much seconds in week,604800,Pass,7.712,-
-4,test_image_search,Show images of dogs,Show images of dogs,Pass,5.279,-
-5,test_movie,Open Movies & TV,True,Pass,13.701,-
-6,test_music,Open Groove music,True,Pass,12.142,-
-7,test_open_calendar,calendar,True,Pass,19.075,-
-8,test_open_excel,Open excel,Open excel,Fail,4.686,False is not true : Search not correct. Expected: 'Open excel'. Actual: ''
-9,test_some_question,Who is the first President of USA?,George Washington,Pass,10.559,-
-10,test_time_city,What time in Tokyo?,"1:27 AM Sat, Jan 18, 2020",Pass,7.308,-
-11,test_volume_sound,Decrease volume by 30,70,Pass,9.2,-
-12,test_weather_city,weather in Vinnytsya,Vinnytsya,Pass,7.276,-
+Test case ID,Description              ,Command                           ,Expected result            ,Pass/Fail,Time to execute,Error message
+1           ,test_alarm_set           ,Set alarm tomorrow at 11 am       ,True                       ,Pass     ,17.222         ,-
+2           ,test_calculator_operation,2 multiply by 18 equal            ,36                         ,Pass     ,5.923          ,-
+3           ,test_converter_week      ,How much seconds in week          ,604800                     ,Pass     ,7.728          ,-
+4           ,test_image_search        ,Show images of dogs               ,Show images of dogs        ,Pass     ,5.274          ,-
+5           ,test_movie               ,Open Movies & TV                  ,True                       ,Pass     ,14.365         ,-
+6           ,test_music               ,Open Groove music                 ,True                       ,Pass     ,12.716         ,-
+7           ,test_open_calendar       ,calendar                          ,True                       ,Pass     ,19.956         ,-
+8           ,test_open_excel          ,Open excel                        ,True                       ,Pass     ,12.629         ,-
+9           ,test_some_question       ,Who is the first President of USA?,George Washington          ,Pass     ,15.165         ,-
+10          ,test_time_city           ,What time in Tokyo?               ,"1:13 AM Wed, Jan 22, 2020",Pass     ,7.351          ,-
+11          ,test_volume_sound        ,Decrease volume by 30             ,70                         ,Pass     ,9.51           ,-
+12          ,test_weather_city        ,weather in Vinnytsya              ,Vinnytsya                  ,Pass     ,7.282          ,-
