@@ -37,10 +37,13 @@ def list_min(array, min_values=2):
     return array[:min_values]
 
 
-def kill_process(name):
-    for process in psutil.process_iter():
-        if process.name() == name:
-            process.kill()
+def csv_read(file_path):
+    result = []
+    with open(file_path, "r") as file:
+        read_csv = csv.reader(file, delimiter=",")
+        for row in read_csv:
+            result.append(row)
+    return result
 
 
 def csv_write(file_name, data):
@@ -86,13 +89,21 @@ class Process:
 
     @staticmethod
     def is_alive(name):
-        for process in psutil.process_iter():
-            if process.name() == name:
-                return True
+        try:
+            for process in psutil.process_iter():
+                with process.oneshot():
+                    if process.name() == name:
+                        return True
+        except Exception as e:
+            pass
         return False
 
     @staticmethod
     def kill(name):
-        for process in psutil.process_iter():
-            if process.name() == name:
-                process.kill()
+        try:
+            for process in psutil.process_iter():
+                with process.oneshot():
+                    if process.name() == name:
+                        process.kill()
+        except Exception as e:
+            pass

@@ -12,6 +12,7 @@ class Monitor:
     def __init__(self, process_name):
         self.name = process_name
         self.process = 0
+        self.test_number = 0
 
     def get_path(self, file_name):
         """
@@ -25,7 +26,7 @@ class Monitor:
         # mode = "a" if mode != "w" else "w"
         # field_names = ["Date", "Process_name", "Cpu_percent", "Memory_percent", "Memory_rss", "Memory_vms"],
         with open(file_path, "a", newline='\n') as file:
-            write_csv = csv.writer(file, delimiter=";")
+            write_csv = csv.writer(file, delimiter=",")
             write_csv.writerow(data)
 
     def get_date(self):
@@ -39,6 +40,8 @@ class Monitor:
                         temp = [
                             self.get_date(),
                             process.name(),
+                            process.pid,
+                            "test_" + str(self.test_number),
                             process.cpu_percent(),
                             # process.cpu_times().user,
                             # process.cpu_times().system,
@@ -47,10 +50,11 @@ class Monitor:
                             process.memory_info().vms / (1024 * 1024)
                         ]
                         temp = list(map(lambda x: " " + str(round(x, 2)) if type(x) == float else " " + str(x), temp))
-            time.sleep(1)
-            self.csv_write(temp)
+            # time.sleep(1)
+        self.csv_write(temp)
 
     def begin(self):
+        self.test_number += 1
         self.process = Process(target=self.scan)
         self.process.start()
 
