@@ -56,3 +56,8 @@ def plot_data(*country, data):
 data_dict = get_data(FILE_NAME)
 stats_dict = get_stats(data_dict, "2002")
 plot_data("Ukraine", "Austria", "Singapore", data=data_dict)
+
+"""
+    This only for other branch.
+    Push only there.
+"""
