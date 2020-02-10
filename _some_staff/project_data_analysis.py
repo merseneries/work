@@ -39,11 +39,14 @@ def get_stats(data, year):
     return {"min": min, "max": max, "avg": avg}
 
 
-def plot_data(data, country):
-    key_index = list(data.keys()).index(country)
-    y_data = list(data.values())[key_index]
-    x_data = list(data.values())[0]
-    plt.plot(x_data, y_data)
+def plot_data(*country, data):
+    plt.subplot()
+    for i in country:
+        key_index = list(data.keys()).index(i)
+        y_data = list(data.values())[key_index]
+        x_data = list(data.values())[0]
+        plt.plot(x_data, y_data, label=i)
+    plt.legend()
     plt.xlabel("Years")
     plt.ylabel("Emissions")
     plt.grid(True)
@@ -52,4 +55,4 @@ def plot_data(data, country):
 
 data_dict = get_data(FILE_NAME)
 stats_dict = get_stats(data_dict, "2002")
-plot_data(data_dict, "Ukraine")
+plot_data("Ukraine", "Austria", "Singapore", data=data_dict)
