@@ -3,9 +3,10 @@ import matplotlib.pyplot as plt
 from local_package.funcs import *
 
 FILE_NAME = "Emissions.csv"
+OUTPUT_FILE = "User_selection"
 
 
-def get_data(file_name):
+def get_file_data(file_name):
     file_path = get_path(FILE_NAME)
     file_data = csv_read(file_path)
 
@@ -34,7 +35,8 @@ def get_stats(data, year):
             avg.append(tmp)
         avg = sum(avg) / len(avg)
     except ValueError:
-        print("Year", year, "not in list")
+        print("Error: year", year, "not in list")
+        return
 
     return {"min": min, "max": max, "avg": avg}
 
@@ -44,7 +46,7 @@ def plot_data(*country, data):
     for i in country:
         key_index = list(data.keys()).index(i)
         y_data = list(data.values())[key_index]
-        x_data = list(data.values())[0]
+        x_data = list(data.values())[0][1:]
         plt.plot(x_data, y_data, label=i)
     plt.legend()
     plt.xlabel("Years")
@@ -53,7 +55,22 @@ def plot_data(*country, data):
     plt.show()
 
 
-data_dict = get_data(FILE_NAME)
+def get_selected(*country, data):
+    data = data.copy()
+    keys_data = list(data.keys())
+    temp = [list(data.values())[0]]
+    temp[0].insert(0, keys_data[0])
+
+    for c in country:
+        for i, v in enumerate(keys_data[1:]):
+            if c == v:
+                temp.append([c, " ".join([str(i) for i in data[c]])])
+    return temp
+
+
+data_dict = get_file_data(FILE_NAME)
+select_data = get_selected("Ukraine", "Austria", "Singapore", data=data_dict)
+csv_write(OUTPUT_FILE, select_data)
 stats_dict = get_stats(data_dict, "2002")
 plot_data("Ukraine", "Austria", "Singapore", data=data_dict)
 
