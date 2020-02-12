@@ -3,7 +3,7 @@ import wolframalpha
 import pytesseract
 from PIL import Image
 
-from my_funcs import get_resource
+from local_package import get_resource
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 

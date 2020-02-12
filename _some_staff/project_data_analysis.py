@@ -46,7 +46,7 @@ def plot_data(*country, data):
     for i in country:
         key_index = list(data.keys()).index(i)
         y_data = list(data.values())[key_index]
-        x_data = list(data.values())[0][1:]
+        x_data = list(data.values())[0]
         plt.plot(x_data, y_data, label=i)
     plt.legend()
     plt.xlabel("Years")
@@ -58,13 +58,12 @@ def plot_data(*country, data):
 def get_selected(*country, data):
     data = data.copy()
     keys_data = list(data.keys())
-    temp = [list(data.values())[0]]
-    temp[0].insert(0, keys_data[0])
+    temp = [[keys_data[0]] + list(data.values())[0]]
 
     for c in country:
         for i, v in enumerate(keys_data[1:]):
             if c == v:
-                temp.append([c, " ".join([str(i) for i in data[c]])])
+                temp.append([c]+data[c])
     return temp
 
 

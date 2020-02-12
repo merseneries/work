@@ -180,44 +180,43 @@ class Test_Cortana(unittest.TestCase):
 
     """
 
-    # # Say 'Hey Cortana' to check if it opened
-    # @monitor(iter=1)
-    # def test_smoke_1(self):
-    #     self.command = "Hey Cortana"
-    #     cortana_response = self.driver.find_element_by_name("Cortana").text
-    #     self.expected_result = "Cortana"
-    #     self.assertEqual(cortana_response, self.expected_result, "Cortana doesn't open")
-    #
-    # @monitor(iter=1)
-    # def test_smoke_2(self):
-    #     text_time = "What time is it?"
-    #     self.say(text_time)
-    #     self.command = text_time
-    #     cortana_response = self.get_screenshot_text(area=(150, 560, 200, 50))
-    #     current_time = time.strftime(" %I:%M %p").lstrip(" 0").replace("0", "")
-    #     self.expected_result = current_time
-    #     self.assertEqual(cortana_response, current_time, "Time doesn't equal")
-    #
-    # @monitor(iter=1)
-    # def test_smoke_3(self):
-    #     text_open = "Open settings"
-    #     self.say(text_open)
-    #     self.command = text_open
-    #     cortana_response = self.get_screenshot_text(area=(50, 450, 325, 60))
-    #     self.expected_result = text_open
-    #     self.assertTrue(self.check_response(text_open, cortana_response), "Setting didn't open")
-    #
-    # @monitor(iter=1)
-    # def test_smoke_4(self):
-    #     self.say("", 15)
-    #     check_exist = self.is_exist("Cortana")
-    #     self.assertFalse(check_exist, "Cortana didn't close after say nothing")
-    #
-    # @monitor(iter=1)
-    # def test_smoke_5(self):
-    #     self.say("Грай музику", 15)
-    #     check_exist = self.is_exist("Cortana")
-    #     self.assertFalse(check_exist, "Cortana didn't close")
+    @monitor(iter=1)
+    def test_smoke_1(self):
+        self.command = "Hey Cortana"
+        cortana_response = self.driver.find_element_by_name("Cortana").text
+        self.expected_result = "Cortana"
+        self.assertEqual(cortana_response, self.expected_result, "Cortana doesn't open")
+
+    @monitor(iter=1)
+    def test_smoke_2(self):
+        text_time = "What time is it?"
+        self.say(text_time)
+        self.command = text_time
+        cortana_response = self.get_screenshot_text(area=(150, 560, 200, 50))
+        current_time = time.strftime(" %I:%M %p").lstrip(" 0").replace("0", "")
+        self.expected_result = current_time
+        self.assertEqual(cortana_response, current_time, "Time doesn't equal")
+
+    @monitor(iter=1)
+    def test_smoke_3(self):
+        text_open = "Open settings"
+        self.say(text_open)
+        self.command = text_open
+        cortana_response = self.get_screenshot_text(area=(50, 450, 325, 60))
+        self.expected_result = text_open
+        self.assertTrue(self.check_response(text_open, cortana_response), "Setting didn't open")
+
+    @monitor(iter=1)
+    def test_smoke_4(self):
+        self.say("", 15)
+        check_exist = self.is_exist("Cortana")
+        self.assertFalse(check_exist, "Cortana didn't close after say nothing")
+
+    @monitor(iter=1)
+    def test_smoke_5(self):
+        self.say("Грай музику", 15)
+        check_exist = self.is_exist("Cortana")
+        self.assertFalse(check_exist, "Cortana didn't close")
 
     """
     
@@ -225,169 +224,169 @@ class Test_Cortana(unittest.TestCase):
     
     """
 
-    #
-    # @allure.step("Test set alarm and check if it opened")
-    # @monitor(iter=1)
-    # def test_alarm_set(self):
-    #     text_alarm = "Set alarm tomorrow at 11 am"
-    #     self.command = text_alarm
-    #     self.say(text_alarm, 4)
-    #
-    #     # check if response about set alarm
-    #     cortana_response = self.get_screenshot_text(area=(55, 560, 150, 55))
-    #     self.expected_result = text_alarm
-    #     self.assertTrue(self.check_response(text_alarm, cortana_response),
-    #                     "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_alarm, cortana_response))
-    #
-    #     # add check if system set alarm in app
-    #     Process.open(PATH_ALARM)
-    #     check_open = Process.is_alive("Time.exe")
-    #     self.expected_result = True
-    #     self.assertTrue(check_open, "Alarm didn't open")
-    #
-    #     autogui.hotkey("win", "c")
-    #     self.say("Delete all alarms")
-    #     autogui.sleep(2)
-    #     Process.kill("Time.exe")
-    #
-    # @allure.step("Test check calculator operation")
-    # @monitor(iter=1)
-    # def test_calculator_operation(self):
-    #     text_math = "2 multiply by 18 equal"
-    #     math_expected = 2 * 18
-    #     self.command = text_math
-    #
-    #     self.say(text_math)
-    #
-    #     # check if response about calculation
-    #     cortana_response = self.driver.find_element_by_class_name("WebView").text
-    #     self.expected_result = text_math
-    #     self.assertTrue(self.check_response(text_math, cortana_response),
-    #                     "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_math, cortana_response))
-    #
-    #     # check if correct calculation
-    #     cortana_result = self.driver.find_element_by_accessibility_id("rcHead").text
-    #     self.expected_result = math_expected
-    #     self.assertEqual(str(math_expected), cortana_result,
-    #                      "{0} don't equal {1}".format(math_expected, cortana_result))
-    #
-    # @allure.step("Test check how much seconds in week")
-    # @monitor(iter=1)
-    # def test_converter_week(self):
-    #     text_convert = "How much seconds in week"
-    #     expected_convert = str(7 * 24 * 60 * 60)
-    #     self.command = text_convert
-    #
-    #     self.say(text_convert)
-    #
-    #     # check if response about convert
-    #     cortana_response = self.get_screenshot_text(area=(55, 532, 100, 25))
-    #     self.expected_result = text_convert
-    #     self.assertTrue(self.check_response(text_convert, cortana_response),
-    #                     "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_convert, cortana_response))
-    #
-    #     # check if correct convert result
-    #     cortana_result = self.get_screenshot_text(area=(55, 561, 121, 30))
-    #     self.expected_result = expected_convert
-    #     self.assertEqual(expected_convert, cortana_result,
-    #                      "{0} don't equal {1}".format(expected_convert, cortana_result))
-    #
-    #     autogui.sleep(2)
-    #
-    # @allure.step("Test check image of dogs")
-    # @monitor(iter=1)
-    # def test_image_search(self):
-    #     text_image = "Show images of dogs"
-    #     self.command = text_image
-    #     self.say(text_image)
-    #
-    #     # check if response about image
-    #     cortana_response = self.driver.find_element_by_accessibility_id("GreetingLine1").text
-    #     self.expected_result = text_image
-    #     self.assertTrue(self.check_response(text_image, cortana_response),
-    #                     "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_image, cortana_response))
-    #
-    # @allure.step("Test check if calendar opened")
-    # @monitor(iter=1)
-    # def test_open_calendar(self):
-    #     text_open = "calendar"
-    #     self.command = text_open
-    #     self.say(text_open)
-    #
-    #     # check if response about calendar
-    #     cortana_response = self.get_screenshot_text(area=(50, 500, 325, 60))
-    #     self.expected_result = text_open
-    #     self.assertTrue(self.check_response(text_open, cortana_response),
-    #                     "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_open, cortana_response))
-    #     self.wait_listen()
-    #     self.say(text_open, 7)
-    #
-    #     # check if correct program opened
-    #     # cortana_result = self.get_screenshot_text(area=(60, 505, 325, 40))
-    #     # self.assertTrue(self.check_response(text_open, cortana_result), "Must opened calendar")
-    #
-    #     calendar_opened = Process.is_alive("OUTLOOK.EXE")
-    #     self.expected_result = True
-    #     self.assertTrue(calendar_opened, "Outlook didn't open")
-    #     Process.kill("OUTLOOK.EXE")
-    #
-    # @allure.step("Test say question and check response")
-    # @monitor(iter=1)
-    # def test_some_question(self):
-    #     text_question = "Who is the first President of USA?"
-    #     self.command = text_question
-    #     self.say(text_question)
-    #
-    #     # check if response about President
-    #     cortana_response = self.driver.find_element_by_accessibility_id("GreetingLine1").text
-    #     self.expected_result = text_question
-    #     self.assertTrue(self.check_response(text_question, cortana_response),
-    #                     "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_question, cortana_response))
-    #
-    #     # check if result correct President
-    #     cortana_result = self.get_screenshot_text(area=(178, 600, 200, 40))
-    #     woflram_result = self.get_woflramalpha_result(text_question).split(" (", 1)[0]
-    #     self.expected_result = woflram_result
-    #     self.assertEqual(cortana_result, woflram_result, "Result not correct")
-    #
-    # @allure.step("Test decrease volume")
-    # @monitor(iter=1)
-    # def test_volume_sound(self):
-    #     volume = Volume()
-    #     start_level = volume.get_level()
-    #
-    #     text_volume = "Decrease volume by 30"
-    #     self.command = text_volume
-    #     self.say(text_volume)
-    #     changed_level = volume.get_level()
-    #
-    #     self.expected_result = changed_level
-    #     self.assertNotEqual(start_level, changed_level, "Volume didn't change")
-    #
-    #     # autogui.press("volumedown", presses=4)
-    #     volume.set_volume(100)
-    #
-    # @allure.step("Test open excel")
-    # @monitor(iter=1, monitor_on=True)
-    # def test_open_excel(self):
-    #     excel_process = "EXCEL.EXE"
-    #
-    #     text_open = "Open excel"
-    #     self.command = text_open
-    #     self.say(text_open)
-    #
-    #     # check if response about excel
-    #     # cortana_response = self.get_screenshot_text(area=(50, 490, 150, 50))
-    #     # self.expected_result = text_open
-    #     # self.assertTrue(self.check_response(text_open, cortana_response),
-    #     #                 "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_open, cortana_response))
-    #
-    #     time.sleep(3)
-    #     # check if excel opened
-    #     self.expected_result = True
-    #     self.assertTrue(Process.is_alive(excel_process), "Excel didn't open")
-    #
-    #     Process.kill(excel_process)
+
+    @allure.step("Test set alarm and check if it opened")
+    @monitor(iter=1)
+    def test_alarm_set(self):
+        text_alarm = "Set alarm tomorrow at 11 am"
+        self.command = text_alarm
+        self.say(text_alarm, 4)
+
+        # check if response about set alarm
+        cortana_response = self.get_screenshot_text(area=(55, 560, 150, 55))
+        self.expected_result = text_alarm
+        self.assertTrue(self.check_response(text_alarm, cortana_response),
+                        "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_alarm, cortana_response))
+
+        # add check if system set alarm in app
+        Process.open(PATH_ALARM)
+        check_open = Process.is_alive("Time.exe")
+        self.expected_result = True
+        self.assertTrue(check_open, "Alarm didn't open")
+
+        autogui.hotkey("win", "c")
+        self.say("Delete all alarms")
+        autogui.sleep(2)
+        Process.kill("Time.exe")
+
+    @allure.step("Test check calculator operation")
+    @monitor(iter=1)
+    def test_calculator_operation(self):
+        text_math = "2 multiply by 18 equal"
+        math_expected = 2 * 18
+        self.command = text_math
+
+        self.say(text_math)
+
+        # check if response about calculation
+        cortana_response = self.driver.find_element_by_class_name("WebView").text
+        self.expected_result = text_math
+        self.assertTrue(self.check_response(text_math, cortana_response),
+                        "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_math, cortana_response))
+
+        # check if correct calculation
+        cortana_result = self.driver.find_element_by_accessibility_id("rcHead").text
+        self.expected_result = math_expected
+        self.assertEqual(str(math_expected), cortana_result,
+                         "{0} don't equal {1}".format(math_expected, cortana_result))
+
+    @allure.step("Test check how much seconds in week")
+    @monitor(iter=1)
+    def test_converter_week(self):
+        text_convert = "How much seconds in week"
+        expected_convert = str(7 * 24 * 60 * 60)
+        self.command = text_convert
+
+        self.say(text_convert)
+
+        # check if response about convert
+        cortana_response = self.get_screenshot_text(area=(55, 532, 100, 25))
+        self.expected_result = text_convert
+        self.assertTrue(self.check_response(text_convert, cortana_response),
+                        "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_convert, cortana_response))
+
+        # check if correct convert result
+        cortana_result = self.get_screenshot_text(area=(55, 561, 121, 30))
+        self.expected_result = expected_convert
+        self.assertEqual(expected_convert, cortana_result,
+                         "{0} don't equal {1}".format(expected_convert, cortana_result))
+
+        autogui.sleep(2)
+
+    @allure.step("Test check image of dogs")
+    @monitor(iter=1)
+    def test_image_search(self):
+        text_image = "Show images of dogs"
+        self.command = text_image
+        self.say(text_image)
+
+        # check if response about image
+        cortana_response = self.driver.find_element_by_accessibility_id("GreetingLine1").text
+        self.expected_result = text_image
+        self.assertTrue(self.check_response(text_image, cortana_response),
+                        "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_image, cortana_response))
+
+    @allure.step("Test check if calendar opened")
+    @monitor(iter=1)
+    def test_open_calendar(self):
+        text_open = "calendar"
+        self.command = text_open
+        self.say(text_open)
+
+        # check if response about calendar
+        cortana_response = self.get_screenshot_text(area=(50, 500, 325, 60))
+        self.expected_result = text_open
+        self.assertTrue(self.check_response(text_open, cortana_response),
+                        "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_open, cortana_response))
+        self.wait_listen()
+        self.say(text_open, 7)
+
+        # check if correct program opened
+        # cortana_result = self.get_screenshot_text(area=(60, 505, 325, 40))
+        # self.assertTrue(self.check_response(text_open, cortana_result), "Must opened calendar")
+
+        calendar_opened = Process.is_alive("OUTLOOK.EXE")
+        self.expected_result = True
+        self.assertTrue(calendar_opened, "Outlook didn't open")
+        Process.kill("OUTLOOK.EXE")
+
+    @allure.step("Test say question and check response")
+    @monitor(iter=1)
+    def test_some_question(self):
+        text_question = "Who is the first President of USA?"
+        self.command = text_question
+        self.say(text_question)
+
+        # check if response about President
+        cortana_response = self.driver.find_element_by_accessibility_id("GreetingLine1").text
+        self.expected_result = text_question
+        self.assertTrue(self.check_response(text_question, cortana_response),
+                        "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_question, cortana_response))
+
+        # check if result correct President
+        cortana_result = self.get_screenshot_text(area=(178, 600, 200, 40))
+        woflram_result = self.get_woflramalpha_result(text_question).split(" (", 1)[0]
+        self.expected_result = woflram_result
+        self.assertEqual(cortana_result, woflram_result, "Result not correct")
+
+    @allure.step("Test decrease volume")
+    @monitor(iter=1)
+    def test_volume_sound(self):
+        volume = Volume()
+        start_level = volume.get_level()
+
+        text_volume = "Decrease volume by 30"
+        self.command = text_volume
+        self.say(text_volume)
+        changed_level = volume.get_level()
+
+        self.expected_result = changed_level
+        self.assertNotEqual(start_level, changed_level, "Volume didn't change")
+
+        # autogui.press("volumedown", presses=4)
+        volume.set_volume(100)
+
+    @allure.step("Test open excel")
+    @monitor(iter=1, monitor_on=True)
+    def test_open_excel(self):
+        excel_process = "EXCEL.EXE"
+
+        text_open = "Open excel"
+        self.command = text_open
+        self.say(text_open)
+
+        # check if response about excel
+        # cortana_response = self.get_screenshot_text(area=(50, 490, 150, 50))
+        # self.expected_result = text_open
+        # self.assertTrue(self.check_response(text_open, cortana_response),
+        #                 "Search not correct. Expected: '{}'. Actual: '<{}>'".format(text_open, cortana_response))
+
+        time.sleep(3)
+        # check if excel opened
+        self.expected_result = True
+        self.assertTrue(Process.is_alive(excel_process), "Excel didn't open")
+
+        Process.kill(excel_process)
 
     @monitor(iter=100, monitor_on=True)
     def test_open_chrome(self):

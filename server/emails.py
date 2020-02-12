@@ -1,7 +1,7 @@
 from imap_tools import MailBox, Q
 from imapclient import IMAPClient
 
-from my_funcs import get_path
+from local_package import get_path
 
 
 def file_read(name):

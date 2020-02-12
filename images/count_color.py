@@ -2,7 +2,7 @@ import json
 
 from PIL import Image
 
-from my_funcs import get_path
+from local_package import get_path
 
 NAME_IMAGE = "black-picture.png"
 
