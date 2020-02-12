@@ -1,0 +1,101 @@
+Test case ID,Description     ,Command    ,Expected result,Pass/Fail,Time to execute,Error message
+1           ,test_open_chrome,Open Chrome,True           ,Pass     ,24.411         ,-
+2           ,test_open_chrome,Open Chrome,True           ,Pass     ,20.514         ,-
+3           ,test_open_chrome,Open Chrome,True           ,Pass     ,20.717         ,-
+4           ,test_open_chrome,Open Chrome,True           ,Pass     ,21.247         ,-
+5           ,test_open_chrome,Open Chrome,True           ,Pass     ,20.385         ,-
+6           ,test_open_chrome,Open Chrome,True           ,Pass     ,22.426         ,-
+7           ,test_open_chrome,Open Chrome,True           ,Pass     ,20.941         ,-
+8           ,test_open_chrome,Open Chrome,True           ,Pass     ,21.13          ,-
+9           ,test_open_chrome,Open Chrome,True           ,Pass     ,20.396         ,-
+10          ,test_open_chrome,Open Chrome,True           ,Pass     ,20.734         ,-
+11          ,test_open_chrome,Open Chrome,True           ,Pass     ,21.03          ,-
+12          ,test_open_chrome,Open Chrome,True           ,Pass     ,21.223         ,-
+13          ,test_open_chrome,Open Chrome,True           ,Pass     ,21.833         ,-
+14          ,test_open_chrome,Open Chrome,True           ,Pass     ,20.967         ,-
+15          ,test_open_chrome,Open Chrome,True           ,Pass     ,21.097         ,-
+16          ,test_open_chrome,Open Chrome,True           ,Pass     ,20.972         ,-
+17          ,test_open_chrome,Open Chrome,True           ,Pass     ,20.793         ,-
+18          ,test_open_chrome,Open Chrome,True           ,Pass     ,20.726         ,-
+19          ,test_open_chrome,Open Chrome,True           ,Pass     ,21.533         ,-
+20          ,test_open_chrome,Open Chrome,True           ,Pass     ,21.747         ,-
+21          ,test_open_chrome,Open Chrome,True           ,Pass     ,21.124         ,-
+22          ,test_open_chrome,Open Chrome,True           ,Pass     ,21.669         ,-
+23          ,test_open_chrome,Open Chrome,True           ,Pass     ,21.485         ,-
+24          ,test_open_chrome,Open Chrome,True           ,Pass     ,21.049         ,-
+25          ,test_open_chrome,Open Chrome,True           ,Pass     ,21.321         ,-
+26          ,test_open_chrome,Open Chrome,True           ,Pass     ,21.11          ,-
+27          ,test_open_chrome,Open Chrome,True           ,Pass     ,22.514         ,-
+28          ,test_open_chrome,Open Chrome,True           ,Pass     ,21.583         ,-
+29          ,test_open_chrome,Open Chrome,True           ,Pass     ,21.538         ,-
+30          ,test_open_chrome,Open Chrome,True           ,Pass     ,21.887         ,-
+31          ,test_open_chrome,Open Chrome,True           ,Pass     ,21.709         ,-
+32          ,test_open_chrome,Open Chrome,True           ,Fail     ,20.964         ,True is not false : Chrome didn't close
+33          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.708         ,True is not false : Chrome didn't close
+34          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.226         ,True is not false : Chrome didn't close
+35          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.188         ,True is not false : Chrome didn't close
+36          ,test_open_chrome,Open Chrome,True           ,Fail     ,13.924         ,False is not true : Chrome didn't open
+37          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.422         ,False is not true : Chrome didn't open
+38          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.456         ,False is not true : Chrome didn't open
+39          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.323         ,False is not true : Chrome didn't open
+40          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.689         ,False is not true : Chrome didn't open
+41          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.541         ,False is not true : Chrome didn't open
+42          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.706         ,False is not true : Chrome didn't open
+43          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.333         ,False is not true : Chrome didn't open
+44          ,test_open_chrome,Open Chrome,True           ,Fail     ,20.815         ,False is not true : Chrome didn't open
+45          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.932         ,False is not true : Chrome didn't open
+46          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.413         ,False is not true : Chrome didn't open
+47          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.654         ,False is not true : Chrome didn't open
+48          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.666         ,False is not true : Chrome didn't open
+49          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.493         ,False is not true : Chrome didn't open
+50          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.35          ,False is not true : Chrome didn't open
+51          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.383         ,False is not true : Chrome didn't open
+52          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.415         ,False is not true : Chrome didn't open
+53          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.018         ,False is not true : Chrome didn't open
+54          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.883         ,False is not true : Chrome didn't open
+55          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.528         ,False is not true : Chrome didn't open
+56          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.444         ,False is not true : Chrome didn't open
+57          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.111         ,False is not true : Chrome didn't open
+58          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.721         ,False is not true : Chrome didn't open
+59          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.19          ,False is not true : Chrome didn't open
+60          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.045         ,False is not true : Chrome didn't open
+61          ,test_open_chrome,Open Chrome,True           ,Fail     ,23.035         ,False is not true : Chrome didn't open
+62          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.726         ,True is not false : Chrome didn't close
+63          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.404         ,True is not false : Chrome didn't close
+64          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.086         ,True is not false : Chrome didn't close
+65          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.121         ,True is not false : Chrome didn't close
+66          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.46          ,True is not false : Chrome didn't close
+67          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.144         ,True is not false : Chrome didn't close
+68          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.681         ,True is not false : Chrome didn't close
+69          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.21          ,True is not false : Chrome didn't close
+70          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.368         ,True is not false : Chrome didn't close
+71          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.695         ,True is not false : Chrome didn't close
+72          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.718         ,True is not false : Chrome didn't close
+73          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.926         ,True is not false : Chrome didn't close
+74          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.991         ,True is not false : Chrome didn't close
+75          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.721         ,True is not false : Chrome didn't close
+76          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.238         ,True is not false : Chrome didn't close
+77          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.643         ,True is not false : Chrome didn't close
+78          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.351         ,True is not false : Chrome didn't close
+79          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.39          ,True is not false : Chrome didn't close
+80          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.011         ,True is not false : Chrome didn't close
+81          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.21          ,True is not false : Chrome didn't close
+82          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.443         ,True is not false : Chrome didn't close
+83          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.58          ,True is not false : Chrome didn't close
+84          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.133         ,True is not false : Chrome didn't close
+85          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.276         ,True is not false : Chrome didn't close
+86          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.885         ,True is not false : Chrome didn't close
+87          ,test_open_chrome,Open Chrome,True           ,Fail     ,23.503         ,True is not false : Chrome didn't close
+88          ,test_open_chrome,Open Chrome,True           ,Fail     ,23.277         ,True is not false : Chrome didn't close
+89          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.343         ,True is not false : Chrome didn't close
+90          ,test_open_chrome,Open Chrome,True           ,Fail     ,23.241         ,True is not false : Chrome didn't close
+91          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.499         ,True is not false : Chrome didn't close
+92          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.61          ,True is not false : Chrome didn't close
+93          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.68          ,True is not false : Chrome didn't close
+94          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.205         ,True is not false : Chrome didn't close
+95          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.364         ,True is not false : Chrome didn't close
+96          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.547         ,True is not false : Chrome didn't close
+97          ,test_open_chrome,Open Chrome,True           ,Fail     ,21.964         ,True is not false : Chrome didn't close
+98          ,test_open_chrome,Open Chrome,True           ,Fail     ,22.727         ,True is not false : Chrome didn't close
+99          ,test_open_chrome,Open Chrome,True           ,Fail     ,23.317         ,True is not false : Chrome didn't close
+100         ,test_open_chrome,Open Chrome,True           ,Fail     ,13.749         ,False is not true : Chrome didn't open

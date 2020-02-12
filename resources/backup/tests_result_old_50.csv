@@ -1,0 +1,51 @@
+Test case ID,Description    ,Command   ,Expected result,Pass/Fail,Time to execute,Error message
+1           ,test_open_excel,Open excel,TRUE           ,Pass     ,14.556         ,-
+2           ,test_open_excel,Open excel,TRUE           ,Pass     ,11.807         ,-
+3           ,test_open_excel,Open excel,TRUE           ,Pass     ,12.196         ,-
+4           ,test_open_excel,Open excel,TRUE           ,Pass     ,12.253         ,-
+5           ,test_open_excel,Open excel,TRUE           ,Pass     ,12.007         ,-
+6           ,test_open_excel,Open excel,TRUE           ,Pass     ,12.407         ,-
+7           ,test_open_excel,Open excel,TRUE           ,Pass     ,12.708         ,-
+8           ,test_open_excel,Open excel,TRUE           ,Pass     ,12.601         ,-
+9           ,test_open_excel,Open excel,TRUE           ,Pass     ,11.864         ,-
+10          ,test_open_excel,Open excel,TRUE           ,Pass     ,12.142         ,-
+11          ,test_open_excel,Open excel,TRUE           ,Pass     ,12.5           ,-
+12          ,test_open_excel,Open excel,TRUE           ,Pass     ,12.418         ,-
+13          ,test_open_excel,Open excel,TRUE           ,Pass     ,12.189         ,-
+14          ,test_open_excel,Open excel,TRUE           ,Pass     ,12.337         ,-
+15          ,test_open_excel,Open excel,TRUE           ,Pass     ,13.056         ,-
+16          ,test_open_excel,Open excel,TRUE           ,Pass     ,12.435         ,-
+17          ,test_open_excel,Open excel,TRUE           ,Pass     ,12.616         ,-
+18          ,test_open_excel,Open excel,TRUE           ,Pass     ,12.521         ,-
+19          ,test_open_excel,Open excel,TRUE           ,Pass     ,12.557         ,-
+20          ,test_open_excel,Open excel,TRUE           ,Pass     ,12.151         ,-
+21          ,test_open_excel,Open excel,TRUE           ,Pass     ,11.481         ,-
+22          ,test_open_excel,Open excel,TRUE           ,Pass     ,13.398         ,-
+23          ,test_open_excel,Open excel,TRUE           ,Pass     ,12.153         ,-
+24          ,test_open_excel,Open excel,TRUE           ,Pass     ,12.353         ,-
+25          ,test_open_excel,Open excel,TRUE           ,Pass     ,12.182         ,-
+26          ,test_open_excel,Open excel,TRUE           ,Pass     ,12.415         ,-
+27          ,test_open_excel,Open excel,TRUE           ,Pass     ,12.332         ,-
+28          ,test_open_excel,Open excel,TRUE           ,Pass     ,12.595         ,-
+29          ,test_open_excel,Open excel,TRUE           ,Pass     ,13.025         ,-
+30          ,test_open_excel,Open excel,TRUE           ,Pass     ,12.53          ,-
+31          ,test_open_excel,Open excel,TRUE           ,Pass     ,12.673         ,-
+32          ,test_open_excel,Open excel,TRUE           ,Pass     ,12.588         ,-
+33          ,test_open_excel,Open excel,TRUE           ,Fail     ,9.871          ,False is not true : Excel didn't open
+34          ,test_open_excel,Open excel,TRUE           ,Fail     ,12.286         ,False is not true : Excel didn't open
+35          ,test_open_excel,Open excel,TRUE           ,Fail     ,12.935         ,False is not true : Excel didn't open
+36          ,test_open_excel,Open excel,TRUE           ,Fail     ,13.394         ,False is not true : Excel didn't open
+37          ,test_open_excel,Open excel,TRUE           ,Fail     ,12.347         ,False is not true : Excel didn't open
+38          ,test_open_excel,Open excel,TRUE           ,Fail     ,12.631         ,False is not true : Excel didn't open
+39          ,test_open_excel,Open excel,TRUE           ,Fail     ,12.615         ,False is not true : Excel didn't open
+40          ,test_open_excel,Open excel,TRUE           ,Fail     ,12.698         ,False is not true : Excel didn't open
+41          ,test_open_excel,Open excel,TRUE           ,Fail     ,12.584         ,False is not true : Excel didn't open
+42          ,test_open_excel,Open excel,TRUE           ,Fail     ,12.365         ,False is not true : Excel didn't open
+43          ,test_open_excel,Open excel,TRUE           ,Fail     ,13.269         ,False is not true : Excel didn't open
+44          ,test_open_excel,Open excel,TRUE           ,Fail     ,12.481         ,False is not true : Excel didn't open
+45          ,test_open_excel,Open excel,TRUE           ,Fail     ,12.604         ,False is not true : Excel didn't open
+46          ,test_open_excel,Open excel,TRUE           ,Fail     ,12.374         ,False is not true : Excel didn't open
+47          ,test_open_excel,Open excel,TRUE           ,Fail     ,12.547         ,False is not true : Excel didn't open
+48          ,test_open_excel,Open excel,TRUE           ,Fail     ,12.753         ,False is not true : Excel didn't open
+49          ,test_open_excel,Open excel,TRUE           ,Fail     ,12.904         ,False is not true : Excel didn't open
+50          ,test_open_excel,Open excel,TRUE           ,Fail     ,12.652         ,False is not true : Excel didn't open
