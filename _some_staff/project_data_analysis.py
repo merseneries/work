@@ -73,7 +73,3 @@ csv_write(OUTPUT_FILE, select_data)
 stats_dict = get_stats(data_dict, "2002")
 plot_data("Ukraine", "Austria", "Singapore", data=data_dict)
 
-"""
-    This only for other branch.
-    Push only there.
-"""
