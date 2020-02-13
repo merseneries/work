@@ -88,9 +88,3 @@ class Monitor:
                     self.data.append(temp)
                     time.sleep(delay)
 
-
-'''
-if __name__ == '__main__':
-    monitor = Monitor(sys.argv[1])
-    monitor.csv_write(monitor.get_process_stat())
-'''
