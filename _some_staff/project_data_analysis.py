@@ -63,7 +63,7 @@ def get_selected(*country, data):
     for c in country:
         for i, v in enumerate(keys_data[1:]):
             if c == v:
-                temp.append([c]+data[c])
+                temp.append([c] + data[c])
     return temp
 
 
@@ -72,4 +72,3 @@ select_data = get_selected("Ukraine", "Austria", "Singapore", data=data_dict)
 csv_write(OUTPUT_FILE, select_data)
 stats_dict = get_stats(data_dict, "2002")
 plot_data("Ukraine", "Austria", "Singapore", data=data_dict)
-

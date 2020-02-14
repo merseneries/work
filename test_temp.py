@@ -1,11 +1,16 @@
-import allure_pytest
+import threading
+import time
 
-PATH = r"E:\Programs\WindowsApplicationDriver\WinAppDriver.exe"
-import sys
-import os
-
-PATH_CORTANA = r"C:\Windows\SystemApps\Microsoft.Windows.Cortana_cw5n1h2txyewy\SearchUI.exe"
-
-os.startfile(PATH_CORTANA)
 
 # subprocess.call("wmic path win32_networkadapter where index=1 call enable")
+
+class Waiter(threading.Thread):
+    def __init__(self, name, count):
+        threading.Thread.__init__(self)
+        self.name = name
+        self.count = count
+
+    def run(self):
+        for i in range(self.count):
+            print(f"This is {self.name}")
+            time.sleep(1)

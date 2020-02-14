@@ -14,11 +14,16 @@ class Monitor:
         self.process = 0
         self.test_number = 0
 
-    def get_path(self, file_name):
+    @staticmethod
+    def get_path(file_name):
         """
         :param file_name: name of file with type
         """
         return os.getcwd() + os.sep + 'resources' + os.sep + file_name
+
+    @staticmethod
+    def get_date():
+        return datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
 
     def csv_write(self, data):
         file_name = self.name.rsplit(".", 1)[0] + ".csv"
@@ -28,9 +33,6 @@ class Monitor:
         with open(file_path, "a", newline='\n') as file:
             write_csv = csv.writer(file, delimiter=",")
             write_csv.writerow(data)
-
-    def get_date(self):
-        return datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
 
     def scan(self):
         while True:
