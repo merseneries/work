@@ -14,7 +14,6 @@ def list_no_duplicates(array):
 
 
 def sort_list(array):
-    tmp = 0
     arr_len = len(array)
 
     if arr_len == 0:
